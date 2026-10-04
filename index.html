@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#315bea">
+<title>I'm Progressing</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="brand-mini">
+    <div class="avatar" id="headerAvatar">IP</div>
+    <div>
+      <strong id="headerName">I'm Progressing</strong>
+      <span>Student dashboard</span>
+    </div>
+  </div>
+  <button class="icon-btn" id="profileBtn">⚙️</button>
+</header>
+
+<main>
+
+<!-- HOME -->
+
+<section id="homePage" class="page active">
+
+  <div class="hero">
+    <div>
+      <span class="eyebrow">TODAY</span>
+      <h1 id="welcomeTitle">Let's make progress.</h1>
+      <p>Plan your study, record what you actually did, and see your progress automatically.</p>
+    </div>
+    <div class="hero-ring" id="heroProgress">0%</div>
+  </div>
+
+  <div class="stats-grid">
+
+    <div class="stat-card">
+      <span>🎯</span>
+      <small>Planned</small>
+      <b id="plannedTotal">0m</b>
+    </div>
+
+    <div class="stat-card">
+      <span>⏱️</span>
+      <small>Actual</small>
+      <b id="actualTotal">0m</b>
+    </div>
+
+    <div class="stat-card">
+      <span>📈</span>
+      <small>Progress</small>
+      <b id="progressTotal">0%</b>
+    </div>
+
+    <div class="stat-card clickable" id="homeStreakBtn">
+      <span>🔥</span>
+      <small>Streak</small>
+      <b id="streakTotal">0 days</b>
+    </div>
+
+  </div>
+
+  <section class="card">
+
+    <div class="section-title">
+      <div>
+        <span class="eyebrow">QUICK VIEW</span>
+        <h2>Today's Progress</h2>
+      </div>
+
+      <span class="status-pill" id="todayStatus">No Data</span>
+    </div>
+
+    <div id="todayRecords" class="record-list"></div>
+
+    <button class="danger-small clear-home" id="clearHomeBtn">
+      Clear All
+    </button>
+
+  </section>
+
+
+  <!-- SMART DAILY PLANNER -->
+
+  <section class="card smart-planner-card">
+
+    <div class="planner-heading">
+
+      <div class="planner-icon">
+        🧠
+      </div>
+
+      <div>
+        <span class="eyebrow">SMART PLANNER</span>
+        <h2>Today's Study Plan</h2>
+        <p>Based on your target and progress.</p>
+      </div>
+
+    </div>
+
+
+    <div class="planner-target">
+
+      <div>
+        <span>Daily Target</span>
+        <strong id="plannerTarget">0m</strong>
+      </div>
+
+      <div>
+        <span>Studied</span>
+        <strong id="plannerStudied">0m</strong>
+      </div>
+
+      <div>
+        <span>Remaining</span>
+        <strong id="plannerRemaining">0m</strong>
+      </div>
+
+    </div>
+
+
+    <div class="planner-progress-track">
+      <div
+        class="planner-progress-fill"
+        id="plannerProgressBar"
+      ></div>
+    </div>
+
+    <p
+      class="planner-progress-text"
+      id="plannerProgressText"
+    >
+      Set your daily target to start.
+    </p>
+
+
+    <div class="planner-priority">
+
+      <div class="planner-priority-title">
+
+        <span>🎯</span>
+
+        <div>
+          <b>Subject Priority</b>
+          <small id="plannerPriorityText">
+            Add subjects to get recommendations.
+          </small>
+        </div>
+
+      </div>
+
+      <div
+        id="plannerSubjects"
+        class="planner-subject-list"
+      ></div>
+
+    </div>
+
+
+    <div
+      class="planner-recommendation"
+      id="plannerRecommendation"
+    >
+      💡 Your smart study recommendation will appear here.
+    </div>
+
+  </section>
+
+
+  <section class="card">
+
+    <div class="section-title">
+      <div>
+        <span class="eyebrow">YOUR SUBJECTS</span>
+        <h2>My Subjects</h2>
+      </div>
+
+      <button class="text-btn" data-page="subjectsPage">
+        Manage
+      </button>
+    </div>
+
+    <div id="subjectPreview" class="chips"></div>
+
+  </section>
+
+</section>
+
+
+<!-- STUDY -->
+
+<section id="planPage" class="page">
+
+  <div class="page-heading">
+    <span class="eyebrow">PLAN + RECORD</span>
+    <h1>Today's Study Plan</h1>
+    <p>Add as many subjects and study sessions as you want.</p>
+  </div>
+
+  <section class="card">
+
+    <label>Subject</label>
+
+    <select id="subjectSelect">
+      <option value="">Select a subject</option>
+    </select>
+
+    <div class="two-col">
+
+      <div>
+        <label>Start Time</label>
+        <input type="time" id="startTime">
+      </div>
+
+      <div>
+        <label>End Time</label>
+        <input type="time" id="endTime">
+      </div>
+
+    </div>
+
+    <label>Planned Study Time</label>
+
+    <div class="time-row">
+      <input type="number" id="plannedHours" min="0" max="24" placeholder="Hours">
+      <span>h</span>
+
+      <input type="number" id="plannedMinutes" min="0" max="59" placeholder="Minutes">
+      <span>min</span>
+    </div>
+
+    <p class="hint">
+      If start/end time are filled, planned time is calculated automatically.
+    </p>
+
+    <label>Actual Study Time</label>
+
+    <div class="time-row">
+
+      <input type="number" id="actualHours" min="0" max="24" placeholder="Hours">
+      <span>h</span>
+
+      <input type="number" id="actualMinutes" min="0" max="59" placeholder="Minutes">
+      <span>min</span>
+
+    </div>
+
+    <div class="live-score" id="liveScore">
+      Score will appear here
+    </div>
+
+    <button class="primary-btn" id="addStudyBtn">
+      ＋ Add Study
+    </button>
+
+  </section>
+
+
+  <section class="card">
+
+    <div class="section-title">
+      <h2>Today's Records</h2>
+
+      <button class="danger-small" id="clearTodayBtn">
+        Clear All
+      </button>
+    </div>
+
+    <div id="planRecords" class="record-list"></div>
+
+  </section>
+
+</section>
+
+
+<!-- SUBJECTS -->
+
+<section id="subjectsPage" class="page">
+
+  <div class="page-heading">
+    <span class="eyebrow">CUSTOMIZE</span>
+    <h1>My Subjects</h1>
+    <p>Add the subjects you actually study.</p>
+  </div>
+
+  <section class="card">
+
+    <label>New Subject</label>
+
+    <input
+      type="text"
+      id="subjectInput"
+      placeholder="e.g. Mathematics"
+    >
+
+    <button class="primary-btn" id="addSubjectBtn">
+      ＋ Add Subject
+    </button>
+
+    <div id="subjectsList" class="subject-list"></div>
+
+  </section>
+
+</section>
+
+
+<!-- PROGRESS -->
+
+<section id="progressPage" class="page">
+
+  <div class="page-heading">
+    <span class="eyebrow">ANALYTICS</span>
+    <h1>My Progress</h1>
+    <p>See how consistently you are completing your planned study.</p>
+  </div>
+
+  <section class="card">
+
+    <div class="progress-big">
+
+      <div class="big-number" id="overallProgress">
+        0%
+      </div>
+
+      <div>
+        <h2>Overall Progress</h2>
+        <p id="overallMessage">
+          Add study records to start tracking.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="bar">
+      <div id="overallBar"></div>
+    </div>
+
+  </section>
+
+
+  <section class="card">
+
+    <div class="section-title">
+      <h2>Last 7 Days</h2>
+      <span class="muted" id="weekTotal">0m</span>
+    </div>
+
+    <div id="weekChart" class="week-chart"></div>
+
+  </section>
+
+
+  <section class="card">
+
+    <h2>Subject Progress</h2>
+
+    <div id="subjectProgress"></div>
+
+  </section>
+
+
+  <section class="card">
+
+    <span class="eyebrow">ACHIEVEMENTS</span>
+    <h2>Keep Going 🏆</h2>
+
+    <div id="achievements" class="achievement-grid"></div>
+
+  </section>
+
+</section>
+
+
+<!-- STREAK -->
+
+<section id="streakPage" class="page">
+
+  <div class="page-heading">
+    <span class="eyebrow">STREAK + LEVELS</span>
+    <h1>Keep Your Streak Alive 🔥</h1>
+    <p>Good progress levels you up, average keeps your level, and poor progress can lower it.</p>
+  </div>
+
+
+  <section class="streak-main-card">
+
+    <div class="streak-fire">🔥</div>
+
+    <div class="streak-big-number" id="streakPageNumber">
+      0
+    </div>
+
+    <div class="streak-days-label">
+      DAY STREAK
+    </div>
+
+    <p class="streak-message" id="streakMessage">
+      Start studying today to build your streak.
+    </p>
+
+    <div class="streak-stat-grid">
+
+      <div class="streak-stat">
+        <span>Best</span>
+        <b id="bestStreak">0</b>
+        <small>days</small>
+      </div>
+
+      <div class="streak-stat">
+        <span>Active</span>
+        <b id="activeDays">0</b>
+        <small>days</small>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <section class="xp-card">
+
+    <div class="xp-header">
+
+      <div>
+        <span>CURRENT LEVEL</span>
+        <strong id="levelNumber">Level 1</strong>
+        <small id="levelTitle">Beginner</small>
+      </div>
+
+      <div class="xp-value">
+        <strong id="currentXP">0 XP</strong>
+        <span id="nextLevelXP">100 XP</span>
+      </div>
+
+    </div>
+
+    <div class="xp-track">
+      <div id="xpBar"></div>
+    </div>
+
+    <div class="xp-footer">
+      <span id="xpMessage">100 XP to next level</span>
+    </div>
+
+  </section>
+
+
+  <section class="card">
+
+    <div class="section-title">
+      <h2>Last 7 Days</h2>
+      <span class="muted">Study quality</span>
+    </div>
+
+    <div id="streakWeekGrid" class="streak-week-grid"></div>
+
+  </section>
+
+
+  <section class="card">
+
+    <span class="eyebrow">LEVEL ROADMAP</span>
+    <h2>Your Levels</h2>
+
+    <div id="levelRoadmap" class="level-roadmap">
+
+      <div class="roadmap-item" data-level="1">
+        <b>Level 1</b>
+        <span>Beginner</span>
+      </div>
+
+      <div class="roadmap-item" data-level="2">
+        <b>Level 2</b>
+        <span>Consistent</span>
+      </div>
+
+      <div class="roadmap-item" data-level="3">
+        <b>Level 3</b>
+        <span>Focused</span>
+      </div>
+
+      <div class="roadmap-item" data-level="4">
+        <b>Level 4</b>
+        <span>Dedicated</span>
+      </div>
+
+      <div class="roadmap-item" data-level="5">
+        <b>Level 5</b>
+        <span>Master</span>
+      </div>
+
+    </div>
+
+  </section>
+
+</section>
+
+
+<!-- PROFILE -->
+
+<section id="profilePage" class="page">
+
+  <div class="page-heading">
+    <span class="eyebrow">PROFILE</span>
+    <h1>Your Profile</h1>
+    <p>Manage your personal study profile.</p>
+  </div>
+
+
+  <section class="card new-profile-card">
+
+    <div class="new-profile-top">
+
+      <div class="big-profile-avatar-wrap">
+
+        <div class="big-profile-avatar" id="profileAvatar">
+          IP
+        </div>
+
+        <label class="profile-camera-btn">
+          📷
+          <input type="file" id="avatarInput" accept="image/*">
+        </label>
+
+      </div>
+
+
+      <div class="profile-main-info">
+
+        <h2 id="profileDisplayName">
+          Student
+        </h2>
+
+        <p class="profile-sub-info">
+          Level <b id="profileLevel">1</b>
+          <span>•</span>
+          <b id="profileStreak">0</b> day streak
+        </p>
+
+        <div class="profile-xp-line">
+          <span>XP</span>
+          <strong id="profileXP">0</strong>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="profile-stats-grid">
+
+      <div class="profile-stat">
+        <div class="profile-stat-icon">🔥</div>
+        <strong id="profileStatStreak">0</strong>
+        <span>Streak</span>
+      </div>
+
+      <div class="profile-stat">
+        <div class="profile-stat-icon">⭐</div>
+        <strong id="profileStatXP">0</strong>
+        <span>XP</span>
+      </div>
+
+      <div class="profile-stat">
+        <div class="profile-stat-icon">📚</div>
+        <strong id="profileStatSubjects">0</strong>
+        <span>Subjects</span>
+      </div>
+
+      <div class="profile-stat">
+        <div class="profile-stat-icon">🎯</div>
+        <strong id="profileStatTarget">0m</strong>
+        <span>Daily Goal</span>
+      </div>
+
+    </div>
+
+
+    <button class="profile-edit-btn" id="editProfileBtn">
+      ✏️ Edit Profile
+    </button>
+
+  </section>
+
+
+  <section class="card profile-edit-card" id="profileEditCard">
+
+    <div class="profile-section-title">
+
+      <span>✏️</span>
+
+      <div>
+        <h2>Edit Profile</h2>
+        <p>Update your personal study details.</p>
+      </div>
+
+    </div>
+
+
+    <label>Student Name</label>
+
+    <input
+      type="text"
+      id="nameInput"
+      placeholder="Enter your name"
+      autocomplete="off"
+    >
+
+
+    <label>Daily Study Target</label>
+
+    <div class="time-row">
+
+      <input
+        type="number"
+        id="targetHours"
+        min="0"
+        max="24"
+        placeholder="Hours"
+      >
+
+      <span>h</span>
+
+      <input
+        type="number"
+        id="targetMinutes"
+        min="0"
+        max="59"
+        placeholder="Minutes"
+      >
+
+      <span>min</span>
+
+    </div>
+
+
+    <div class="profile-edit-actions">
+
+      <button
+        class="secondary-profile-btn"
+        id="cancelProfileBtn"
+      >
+        Cancel
+      </button>
+
+      <button
+        class="primary-btn"
+        id="saveProfileBtn"
+      >
+        Save Profile
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <section class="card study-goal-card">
+
+    <div class="study-goal-header">
+
+      <div class="goal-icon">🎯</div>
+
+      <div>
+        <span class="eyebrow">STUDY GOAL</span>
+        <h2>Daily Target</h2>
+      </div>
+
+    </div>
+
+
+    <div class="study-goal-value">
+
+      <strong id="profileGoalText">
+        2h
+      </strong>
+
+      <span>per day</span>
+
+    </div>
+
+
+    <div class="goal-progress-track">
+      <div
+        class="goal-progress-fill"
+        id="profileGoalBar"
+      ></div>
+    </div>
+
+
+    <p id="profileGoalMessage">
+      Keep studying consistently to reach your daily goal.
+    </p>
+
+  </section>
+
+
+  <section class="card settings-card new-settings-card">
+
+    <div class="profile-section-title">
+
+      <span>⚙️</span>
+
+      <div>
+        <span class="eyebrow">SETTINGS</span>
+        <h2>App Settings</h2>
+      </div>
+
+    </div>
+
+
+    <button
+      class="setting-btn"
+      data-page="subjectsPage"
+    >
+      <span>📚</span>
+
+      <div>
+        <b>Manage Subjects</b>
+        <small>Add or remove study subjects</small>
+      </div>
+
+      <strong>›</strong>
+    </button>
+
+
+    <button
+      class="setting-btn"
+      id="profileStreakBtn"
+    >
+      <span>🔥</span>
+
+      <div>
+        <b>Streak & Levels</b>
+        <small>View XP, streak and level progress</small>
+      </div>
+
+      <strong>›</strong>
+    </button>
+
+
+    <button
+      class="setting-btn"
+      data-page="progressPage"
+    >
+      <span>🏆</span>
+
+      <div>
+        <b>Achievements</b>
+        <small>See your unlocked milestones</small>
+      </div>
+
+      <strong>›</strong>
+    </button>
+
+
+    <button
+      class="setting-btn"
+      id="profileBackupBtn"
+    >
+      <span>💾</span>
+
+      <div>
+        <b>Backup Data</b>
+        <small>Save your progress as a backup file</small>
+      </div>
+
+      <strong>›</strong>
+    </button>
+
+
+    <label
+      class="setting-btn"
+      for="profileRestoreInput"
+    >
+      <span>📥</span>
+
+      <div>
+        <b>Restore Data</b>
+        <small>Restore your saved progress</small>
+      </div>
+
+      <strong>›</strong>
+    </label>
+
+
+    <input
+      type="file"
+      id="profileRestoreInput"
+      accept=".json,application/json"
+      style="display:none"
+    >
+
+
+    <button
+      class="setting-btn danger-setting"
+      id="resetBtn"
+    >
+      <span>🗑️</span>
+
+      <div>
+        <b>Reset App Data</b>
+        <small>Delete all local progress</small>
+      </div>
+
+      <strong>›</strong>
+    </button>
+
+  </section>
+
+</section>
+
+</main>
+
+
+<nav class="bottom-nav">
+
+  <button class="nav-btn active" data-page="homePage">
+    <span>🏠</span>
+    <small>Home</small>
+  </button>
+
+  <button class="nav-btn" data-page="planPage">
+    <span>➕</span>
+    <small>Study</small>
+  </button>
+
+  <button class="nav-btn" data-page="subjectsPage">
+    <span>📚</span>
+    <small>Subjects</small>
+  </button>
+
+  <button class="nav-btn" data-page="progressPage">
+    <span>📊</span>
+    <small>Progress</small>
+  </button>
+
+  <button class="nav-btn" data-page="profilePage">
+    <span>👤</span>
+    <small>Profile</small>
+  </button>
+
+</nav>
+
+
+<div class="toast" id="toast"></div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
